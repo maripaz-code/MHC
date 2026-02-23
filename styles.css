@@ -291,6 +291,24 @@ flex-wrap:wrap;
 justify-content:center;
 gap:15px;
 }
+  .estrellas span {
+    font-size: 25px;
+    cursor: pointer;
+    color: #ccc;
+}
+
+.estrellas span.activa {
+    color: gold;
+}
+
+.opinion-card {
+    background: #fff;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
 
 }
+
 

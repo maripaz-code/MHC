@@ -38,61 +38,32 @@ Gracias por elegir MHC Studio 💖`;
 
     // Abrir WhatsApp automáticamente
     window.open(`https://wa.me/${numeroWhatsApp}?text=${mensajeCodificado}`, "_blank");
-// ===== SISTEMA DE OPINIONES =====
+// ===== SISTEMA DE OPINIONES GLOBAL =====
 
-let ratingSeleccionado = 0;
-const estrellas = document.querySelectorAll("#estrellas span");
-const contenedor = document.getElementById("contenedorOpiniones");
+document.addEventListener("DOMContentLoaded", function(){
 
-// Seleccionar estrellas
-estrellas.forEach(estrella => {
-    estrella.addEventListener("click", function(){
-        ratingSeleccionado = this.dataset.valor;
+    const contenedor = document.getElementById("contenedorOpiniones");
+    const listaPagina = document.getElementById("listaOpiniones");
 
-        estrellas.forEach(e => e.classList.remove("activa"));
-        for(let i=0; i<ratingSeleccionado; i++){
-            estrellas[i].classList.add("activa");
-        }
+    const opiniones = JSON.parse(localStorage.getItem("opiniones")) || [];
+
+    opiniones.forEach(op => {
+        crearOpinion(op.nombre, op.texto, op.rating, contenedor);
+        crearOpinion(op.nombre, op.texto, op.rating, listaPagina);
     });
+
 });
 
-// Cargar opiniones guardadas
-document.addEventListener("DOMContentLoaded", cargarOpiniones);
-
-function cargarOpiniones(){
-    const opiniones = JSON.parse(localStorage.getItem("opiniones")) || [];
-    opiniones.forEach(op => mostrarOpinion(op.nombre, op.texto, op.rating));
+function guardarOpinion(nombre, texto, rating){
+    let opiniones = JSON.parse(localStorage.getItem("opiniones")) || [];
+    opiniones.push({nombre, texto, rating});
+    localStorage.setItem("opiniones", JSON.stringify(opiniones));
 }
 
-document.getElementById("btnOpinion").addEventListener("click", function(){
+function crearOpinion(nombre, texto, rating, destino){
 
-    const nombre = document.getElementById("nombreOpinion").value;
-    const texto = document.getElementById("textoOpinion").value;
+    if(!destino) return;
 
-    if(nombre === "" || texto === "" || ratingSeleccionado == 0){
-        alert("Por favor completa todos los campos y selecciona estrellas ⭐");
-        return;
-    }
-
-    const nuevaOpinion = {
-        nombre: nombre,
-        texto: texto,
-        rating: ratingSeleccionado
-    };
-
-    let opiniones = JSON.parse(localStorage.getItem("opiniones")) || [];
-    opiniones.push(nuevaOpinion);
-    localStorage.setItem("opiniones", JSON.stringify(opiniones));
-
-    mostrarOpinion(nombre, texto, ratingSeleccionado);
-
-    document.getElementById("nombreOpinion").value = "";
-    document.getElementById("textoOpinion").value = "";
-    estrellas.forEach(e => e.classList.remove("activa"));
-    ratingSeleccionado = 0;
-});
-
-function mostrarOpinion(nombre, texto, rating){
     const div = document.createElement("div");
     div.classList.add("opinion-card");
 
@@ -104,7 +75,7 @@ function mostrarOpinion(nombre, texto, rating){
         <p>"${texto}"</p>
     `;
 
-    contenedor.prepend(div);
+    destino.prepend(div);
 }
-
 });
+

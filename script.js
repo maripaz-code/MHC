@@ -40,42 +40,96 @@ Gracias por elegir MHC Studio 💖`;
     window.open(`https://wa.me/${numeroWhatsApp}?text=${mensajeCodificado}`, "_blank");
 // ===== SISTEMA DE OPINIONES GLOBAL =====
 
+// ===== VARIABLES =====
+let ratingSeleccionado = 0;
+
+// ===== SISTEMA DE ESTRELLAS =====
 document.addEventListener("DOMContentLoaded", function(){
 
-    const contenedor = document.getElementById("contenedorOpiniones");
-    const listaPagina = document.getElementById("listaOpiniones");
+    const estrellas = document.querySelectorAll("#estrellas span");
 
-    const opiniones = JSON.parse(localStorage.getItem("opiniones")) || [];
-
-    opiniones.forEach(op => {
-        crearOpinion(op.nombre, op.texto, op.rating, contenedor);
-        crearOpinion(op.nombre, op.texto, op.rating, listaPagina);
+    estrellas.forEach(estrella => {
+        estrella.addEventListener("click", function(){
+            ratingSeleccionado = this.getAttribute("data-value");
+            actualizarEstrellas(ratingSeleccionado);
+        });
     });
 
+    // BOTÓN PUBLICAR OPINIÓN
+    const btn = document.getElementById("btnOpinion");
+    if(btn){
+        btn.addEventListener("click", function(){
+
+            const nombre = document.getElementById("nombreOpinion").value;
+            const texto = document.getElementById("textoOpinion").value;
+
+            if(nombre === "" || texto === "" || ratingSeleccionado == 0){
+                alert("Completa todos los campos ⭐");
+                return;
+            }
+
+            guardarOpinion(nombre, texto, ratingSeleccionado);
+
+            alert("✨ Opinión publicada con éxito ✨");
+
+            window.location.href = "opiniones.html";
+        });
+    }
+
+    // MOSTRAR OPINIONES EN opiniones.html
+    mostrarOpiniones();
 });
 
+
+// ===== ACTUALIZAR COLOR DE ESTRELLAS =====
+function actualizarEstrellas(valor){
+    const estrellas = document.querySelectorAll("#estrellas span");
+    estrellas.forEach(estrella => {
+        estrella.classList.remove("activa");
+        if(estrella.getAttribute("data-value") <= valor){
+            estrella.classList.add("activa");
+        }
+    });
+}
+
+
+// ===== GUARDAR OPINIÓN =====
 function guardarOpinion(nombre, texto, rating){
     let opiniones = JSON.parse(localStorage.getItem("opiniones")) || [];
-    opiniones.push({nombre, texto, rating});
+
+    opiniones.push({
+        nombre: nombre,
+        texto: texto,
+        rating: rating
+    });
+
     localStorage.setItem("opiniones", JSON.stringify(opiniones));
 }
 
-function crearOpinion(nombre, texto, rating, destino){
 
-    if(!destino) return;
+// ===== MOSTRAR OPINIONES EN OTRA PÁGINA =====
+function mostrarOpiniones(){
+    const lista = document.getElementById("listaOpiniones");
+    if(!lista) return;
 
-    const div = document.createElement("div");
-    div.classList.add("opinion-card");
+    const opiniones = JSON.parse(localStorage.getItem("opiniones")) || [];
 
-    let estrellasHTML = "★".repeat(rating);
+    opiniones.reverse().forEach(op => {
 
-    div.innerHTML = `
-        <h4>${nombre}</h4>
-        <div class="rating">${estrellasHTML}</div>
-        <p>"${texto}"</p>
-    `;
+        const div = document.createElement("div");
+        div.classList.add("opinion-card");
 
-    destino.prepend(div);
+        let estrellas = "★".repeat(op.rating);
+
+        div.innerHTML = `
+            <h4>${op.nombre}</h4>
+            <div class="rating">${estrellas}</div>
+            <p>"${op.texto}"</p>
+        `;
+
+        lista.appendChild(div);
+    });
 }
 });
+
 

@@ -146,19 +146,60 @@ transition:0.3s;
 transform:translateY(-5px);
 }
 
-/* ====== TESTIMONIOS ====== */
-.testimonios-container{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:30px;
-max-width:1100px;
-margin:auto;
+/* ====== OPINIONES ====== */
+.form-opinion{
+max-width:500px;
+margin:0 auto 40px auto;
+display:flex;
+flex-direction:column;
+gap:15px;
 }
 
-.testimonio{
+.form-opinion textarea{
+padding:10px;
+border-radius:8px;
+border:none;
+resize:none;
+height:100px;
+font-family:'Poppins',sans-serif;
+}
+
+.estrellas{
+display:flex;
+justify-content:center;
+gap:10px;
+font-size:30px;
+cursor:pointer;
+color:#444;
+}
+
+.estrellas span.activa,
+.estrellas span:hover,
+.estrellas span:hover ~ span{
+color:#ff69b4;
+}
+
+.opinion-card{
 background:#111;
-padding:25px;
+padding:20px;
 border-radius:15px;
+margin-bottom:20px;
+animation:fadeIn 0.5s ease-in-out;
+}
+
+.opinion-card h4{
+color:#ff69b4;
+margin-bottom:10px;
+}
+
+.opinion-card .rating{
+color:gold;
+margin-bottom:10px;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(10px);}
+to{opacity:1; transform:translateY(0);}
 }
 
 /* ====== FORMULARIO ====== */
@@ -252,3 +293,4 @@ gap:15px;
 }
 
 }
+

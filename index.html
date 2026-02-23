@@ -5,15 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MHC Studio</title>
 
-<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-
 <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
     <div class="logo">MHC Studio</div>
     <ul>
@@ -26,33 +23,30 @@
     </ul>
 </nav>
 
-<!-- HERO -->
 <section class="hero" id="inicio">
     <h1>Elegancia en cada detalle</h1>
     <p>Transformamos tus uñas en arte ✨</p>
     <a href="#citas" class="btn">Reservar Ahora</a>
 </section>
 
-<!-- DISEÑOS -->
 <section class="disenos" id="disenos">
     <h2>Diseños Destacados</h2>
     <div class="galeria">
         <div class="card">
-            <img src="imagenes/img1.jfif" alt="">
+            <img src="imagenes/img1.jfif">
             <p>Rosado Elegante</p>
         </div>
         <div class="card">
-            <img src="imagenes/img2.jfif" alt="">
+            <img src="imagenes/img2.jfif">
             <p>Morado Glam</p>
         </div>
         <div class="card">
-            <img src="imagenes/img3.jfif" alt="">
+            <img src="imagenes/img3.jfif">
             <p>Negro Sofisticado</p>
         </div>
     </div>
 </section>
 
-<!-- SERVICIOS -->
 <section class="servicios" id="servicios">
     <h2>Servicios</h2>
     <div class="servicios-container">
@@ -71,69 +65,50 @@
     </div>
 </section>
 
-<!-- TESTIMONIOS -->
+<!-- FORMULARIO OPINIONES -->
 <section class="testimonios">
-    <h2>Opiniones</h2>
+    <h2>Deja tu Opinión</h2>
 
-    <!-- Formulario de Opinión -->
-    <div class="form-opinion">
-        <input type="text" id="nombreOpinion" placeholder="Tu nombre" required>
-        <textarea id="textoOpinion" placeholder="Escribe tu opinión..." required></textarea>
+    <input type="text" id="nombreOpinion" placeholder="Tu nombre">
+    <textarea id="textoOpinion" placeholder="Escribe tu opinión"></textarea>
 
-        <!-- Estrellas -->
-        <div class="estrellas" id="estrellas">
-            <span data-valor="1">★</span>
-            <span data-valor="2">★</span>
-            <span data-valor="3">★</span>
-            <span data-valor="4">★</span>
-            <span data-valor="5">★</span>
-        </div>
-
-        <button id="btnOpinion">Publicar Opinión</button>
+    <div class="estrellas" id="estrellas">
+        <span data-value="1">★</span>
+        <span data-value="2">★</span>
+        <span data-value="3">★</span>
+        <span data-value="4">★</span>
+        <span data-value="5">★</span>
     </div>
 
-    <!-- Contenedor donde se mostrarán -->
-    <div class="testimonios-container" id="contenedorOpiniones"></div>
+    <button id="btnOpinion">Publicar Opinión</button>
 </section>
-<!-- CITAS -->
+
 <section class="citas" id="citas">
     <h2>Reservar Cita</h2>
     <form id="formCita">
+        <input type="text" name="nombre" placeholder="Nombre" required>
+        <input type="text" name="apellidos" placeholder="Apellidos" required>
+        <input type="tel" name="celular" placeholder="Número de celular" pattern="[0-9]+" required>
+        <input type="text" name="direccion" placeholder="Dirección" required>
 
-    <input type="text" name="nombre" placeholder="Nombre" required>
-    <input type="text" name="apellidos" placeholder="Apellidos" required>
-    <input type="tel" name="celular" placeholder="Número de celular" pattern="[0-9]+" required>
-    <input type="text" name="direccion" placeholder="Dirección" required>
+        <select name="servicio" required>
+            <option value="">Seleccione servicio</option>
+            <option>Uñas Acrílicas</option>
+            <option>Manicure Spa</option>
+            <option>Pedicure Profesional</option>
+        </select>
 
-    <select name="servicio" required>
-        <option value="">Seleccione servicio</option>
-        <option>Uñas Acrílicas</option>
-        <option>Manicure Spa</option>
-        <option>Pedicure Profesional</option>
-    </select>
+        <input type="date" id="fecha" name="fecha" required>
+        <input type="time" id="hora" name="hora" required>
 
-    <input type="date" id="fecha" name="fecha" required>
-    <input type="time" id="hora" name="hora" required>
-
-    <button type="submit">Reservar Cita</button>
-</form>
+        <button type="submit">Reservar Cita</button>
+    </form>
 </section>
 
-<!-- MODAL -->
-<div id="modal" class="modal">
-    <span class="cerrar">&times;</span>
-    <img class="modal-contenido" id="imgGrande">
-</div>
-
-
-
-<!-- FOOTER -->
 <footer id="contacto">
-    <p>© 2026 MHC Studio | Síguenos en Instagram 💖</p>
+    <p>© 2026 MHC Studio | Instagram 💖</p>
 </footer>
 
 <script src="script.js"></script>
 </body>
-
 </html>
-

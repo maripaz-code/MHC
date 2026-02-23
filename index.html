@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MHC Studio</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">MHC Studio</div>
+    <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#disenos">Diseños</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#citas">Citas</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+    <h1>Elegancia en cada detalle</h1>
+    <p>Transformamos tus uñas en arte ✨</p>
+    <a href="#citas" class="btn">Reservar Ahora</a>
+</section>
+
+<!-- DISEÑOS -->
+<section class="disenos" id="disenos">
+    <h2>Diseños Destacados</h2>
+    <div class="galeria">
+        <div class="card">
+            <img src="imagenes/img1.jfif" alt="">
+            <p>Rosado Elegante</p>
+        </div>
+        <div class="card">
+            <img src="imagenes/img2.jfif" alt="">
+            <p>Morado Glam</p>
+        </div>
+        <div class="card">
+            <img src="imagenes/img3.jfif" alt="">
+            <p>Negro Sofisticado</p>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICIOS -->
+<section class="servicios" id="servicios">
+    <h2>Servicios</h2>
+    <div class="servicios-container">
+        <div class="servicio">
+            <h3>Uñas Acrílicas</h3>
+            <p>Diseños personalizados con acabado profesional.</p>
+        </div>
+        <div class="servicio">
+            <h3>Manicure Spa</h3>
+            <p>Relajación y cuidado completo para tus manos.</p>
+        </div>
+        <div class="servicio">
+            <h3>Pedicure Profesional</h3>
+            <p>Elegancia y limpieza con productos premium.</p>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section class="testimonios">
+    <h2>Opiniones</h2>
+    <div class="testimonios-container">
+        <div class="testimonio">
+            <p>"El mejor servicio, mis uñas quedaron hermosas 💖"</p>
+            <span>- Cliente feliz</span>
+        </div>
+        <div class="testimonio">
+            <p>"Atención increíble y diseños únicos ✨"</p>
+            <span>- Clienta frecuente</span>
+        </div>
+    </div>
+</section>
+
+<!-- CITAS -->
+<section class="citas" id="citas">
+    <h2>Reservar Cita</h2>
+    <form id="formCita">
+
+    <input type="text" name="nombre" placeholder="Nombre" required>
+    <input type="text" name="apellidos" placeholder="Apellidos" required>
+    <input type="tel" name="celular" placeholder="Número de celular" pattern="[0-9]+" required>
+    <input type="text" name="direccion" placeholder="Dirección" required>
+
+    <select name="servicio" required>
+        <option value="">Seleccione servicio</option>
+        <option>Uñas Acrílicas</option>
+        <option>Manicure Spa</option>
+        <option>Pedicure Profesional</option>
+    </select>
+
+    <input type="date" id="fecha" name="fecha" required>
+    <input type="time" id="hora" name="hora" required>
+
+    <button type="submit">Reservar Cita</button>
+</form>
+</section>
+
+<!-- MODAL -->
+<div id="modal" class="modal">
+    <span class="cerrar">&times;</span>
+    <img class="modal-contenido" id="imgGrande">
+</div>
+
+
+
+<!-- FOOTER -->
+<footer id="contacto">
+    <p>© 2026 MHC Studio | Síguenos en Instagram 💖</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

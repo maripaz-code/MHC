@@ -1,0 +1,199 @@
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:#000;
+color:white;
+scroll-behavior:smooth;
+}
+
+/* NAVBAR */
+.navbar{
+position:fixed;
+width:100%;
+background:rgba(0,0,0,0.9);
+display:flex;
+justify-content:space-between;
+padding:15px 40px;
+z-index:1000;
+}
+
+.navbar ul{
+display:flex;
+list-style:none;
+gap:25px;
+}
+
+.navbar a{
+text-decoration:none;
+color:#ff69b4;
+transition:0.3s;
+}
+
+.navbar a:hover{
+color:#d870ff;
+}
+
+.logo{
+font-family:'Playfair Display',serif;
+font-size:22px;
+color:white;
+}
+
+/* HERO */
+.hero{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+background:linear-gradient(to bottom,#000,#800080);
+}
+
+.hero h1{
+font-size:50px;
+font-family:'Playfair Display',serif;
+}
+
+.btn{
+background:linear-gradient(90deg,#ff69b4,#800080);
+padding:12px 25px;
+border-radius:30px;
+color:white;
+text-decoration:none;
+margin-top:20px;
+}
+
+/* SECCIONES */
+section{
+padding:80px 40px;
+text-align:center;
+}
+
+h2{
+color:#ff69b4;
+margin-bottom:40px;
+}
+
+/* GALERIA */
+.galeria{
+display:flex;
+justify-content:center;
+gap:30px;
+flex-wrap:wrap;
+}
+
+.card{
+background:#111;
+border-radius:15px;
+overflow:hidden;
+width:250px;
+transition:0.4s;
+}
+
+.card:hover{
+transform:scale(1.05);
+}
+
+.card img{
+width:100%;
+height:250px;
+object-fit:cover;
+}
+
+/* SERVICIOS */
+.servicios-container{
+display:flex;
+justify-content:center;
+gap:30px;
+flex-wrap:wrap;
+}
+
+.servicio{
+background:#111;
+padding:20px;
+border-radius:15px;
+width:250px;
+}
+
+/* TESTIMONIOS */
+.testimonios-container{
+display:flex;
+justify-content:center;
+gap:30px;
+flex-wrap:wrap;
+}
+
+.testimonio{
+background:#111;
+padding:20px;
+border-radius:15px;
+width:300px;
+}
+
+/* FORMULARIO */
+form{
+display:flex;
+flex-direction:column;
+max-width:400px;
+margin:auto;
+gap:15px;
+}
+
+input,select{
+padding:10px;
+border-radius:8px;
+border:none;
+}
+
+button{
+background:linear-gradient(90deg,#ff69b4,#800080);
+border:none;
+padding:12px;
+border-radius:20px;
+color:white;
+cursor:pointer;
+}
+
+/* MODAL */
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+justify-content:center;
+align-items:center;
+}
+
+.modal img{
+max-width:80%;
+}
+
+.cerrar{
+position:absolute;
+top:20px;
+right:40px;
+font-size:40px;
+cursor:pointer;
+}
+
+/* WHATSAPP */
+.whatsapp{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25d366;
+padding:15px;
+border-radius:50%;
+font-size:25px;
+text-decoration:none;
+}
+
+/* FOOTER */
+footer{
+background:#111;
+padding:20px;
+}

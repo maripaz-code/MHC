@@ -1,26 +1,34 @@
-// Fecha y hora automática
-const fechaInput = document.getElementById("fecha");
-const horaInput = document.getElementById("hora");
+// ===============================
+// CUANDO CARGA LA PÁGINA
+// ===============================
+document.addEventListener("DOMContentLoaded", function(){
 
-const ahora = new Date();
-fechaInput.value = ahora.toISOString().split("T")[0];
-horaInput.value = ahora.toTimeString().slice(0,5);
+    // ===== FECHA Y HORA AUTOMÁTICA =====
+    const fechaInput = document.getElementById("fecha");
+    const horaInput = document.getElementById("hora");
 
-// Evento del formulario
-document.getElementById("formCita").addEventListener("submit", function(e){
-    e.preventDefault();
+    if(fechaInput && horaInput){
+        const ahora = new Date();
+        fechaInput.value = ahora.toISOString().split("T")[0];
+        horaInput.value = ahora.toTimeString().slice(0,5);
+    }
 
-    const nombre = this.nombre.value;
-    const apellidos = this.apellidos.value;
-    const celular = this.celular.value;
-    const direccion = this.direccion.value;
-    const servicio = this.servicio.value;
-    const fecha = this.fecha.value;
-    const hora = this.hora.value;
+    // ===== FORMULARIO WHATSAPP =====
+    const form = document.getElementById("formCita");
+    if(form){
+        form.addEventListener("submit", function(e){
+            e.preventDefault();
 
-    // Crear mensaje personalizado
-    const mensaje = `✨ NUEVA CITA MHC STUDIO ✨
-    
+            const nombre = this.nombre.value;
+            const apellidos = this.apellidos.value;
+            const celular = this.celular.value;
+            const direccion = this.direccion.value;
+            const servicio = this.servicio.value;
+            const fecha = this.fecha.value;
+            const hora = this.hora.value;
+
+            const mensaje = `✨ NUEVA CITA MHC STUDIO ✨
+            
 👩 Nombre: ${nombre} ${apellidos}
 📱 Celular: ${celular}
 📍 Dirección: ${direccion}
@@ -30,21 +38,18 @@ document.getElementById("formCita").addEventListener("submit", function(e){
 
 Gracias por elegir MHC Studio 💖`;
 
-    // Codificar mensaje para URL
-    const mensajeCodificado = encodeURIComponent(mensaje);
+            const mensajeCodificado = encodeURIComponent(mensaje);
+            const numeroWhatsApp = "51936835326"; // CAMBIA SI QUIERES
 
-    // ⚠️ CAMBIA ESTE NÚMERO POR EL TUYO
-    const numeroWhatsApp = "51936835326";
+            window.open(`https://wa.me/${numeroWhatsApp}?text=${mensajeCodificado}`, "_blank");
+        });
+    }
 
-    // Abrir WhatsApp automáticamente
-    window.open(`https://wa.me/${numeroWhatsApp}?text=${mensajeCodificado}`, "_blank");
-// ===== SISTEMA DE OPINIONES GLOBAL =====
+    // ===============================
+    // SISTEMA DE OPINIONES
+    // ===============================
 
-// ===== VARIABLES =====
-let ratingSeleccionado = 0;
-
-// ===== SISTEMA DE ESTRELLAS =====
-document.addEventListener("DOMContentLoaded", function(){
+    let ratingSeleccionado = 0;
 
     const estrellas = document.querySelectorAll("#estrellas span");
 
@@ -55,7 +60,6 @@ document.addEventListener("DOMContentLoaded", function(){
         });
     });
 
-    // BOTÓN PUBLICAR OPINIÓN
     const btn = document.getElementById("btnOpinion");
     if(btn){
         btn.addEventListener("click", function(){
@@ -76,12 +80,14 @@ document.addEventListener("DOMContentLoaded", function(){
         });
     }
 
-    // MOSTRAR OPINIONES EN opiniones.html
     mostrarOpiniones();
 });
 
 
-// ===== ACTUALIZAR COLOR DE ESTRELLAS =====
+// ===============================
+// FUNCIONES
+// ===============================
+
 function actualizarEstrellas(valor){
     const estrellas = document.querySelectorAll("#estrellas span");
     estrellas.forEach(estrella => {
@@ -92,8 +98,6 @@ function actualizarEstrellas(valor){
     });
 }
 
-
-// ===== GUARDAR OPINIÓN =====
 function guardarOpinion(nombre, texto, rating){
     let opiniones = JSON.parse(localStorage.getItem("opiniones")) || [];
 
@@ -106,8 +110,6 @@ function guardarOpinion(nombre, texto, rating){
     localStorage.setItem("opiniones", JSON.stringify(opiniones));
 }
 
-
-// ===== MOSTRAR OPINIONES EN OTRA PÁGINA =====
 function mostrarOpiniones(){
     const lista = document.getElementById("listaOpiniones");
     if(!lista) return;
@@ -130,6 +132,3 @@ function mostrarOpiniones(){
         lista.appendChild(div);
     });
 }
-});
-
-

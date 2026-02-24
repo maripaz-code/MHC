@@ -68,25 +68,32 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // --- 5. MOSTRAR OPINIONES (LISTADO) ---
-    const contenedor = document.getElementById("listaOpiniones");
-    if (contenedor) {
-        db.collection("opiniones")
-        .orderBy("fecha", "desc")
-        .onSnapshot(snapshot => {
-            contenedor.innerHTML = "";
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                const estrellasHtml = "⭐".repeat(data.rating);
-                contenedor.innerHTML += `
-                    <div class="opinion-card">
-                        <h3>${data.nombre}</h3>
-                        <p class="estrellas">${estrellasHtml}</p>
-                        <p>${data.texto}</p>
-                    </div>
-                `;
-            });
-        });
-    }
+   // --- MOSTRAR OPINIONES (LISTADO) ---
+const contenedor = document.getElementById("listaOpiniones");
 
-}); // <-- ESTA ES LA ÚNICA LLAVE QUE DEBE CERRAR AL FINAL
+if (contenedor) {
+    db.collection("opiniones")
+    .orderBy("fecha", "desc") // Trae las más recientes primero
+    .onSnapshot(snapshot => {
+        contenedor.innerHTML = ""; // Limpia el contenedor antes de cargar
+
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            
+            // Creamos las estrellas según el número guardado
+            const estrellasHtml = "⭐".repeat(data.rating);
+
+            // Insertamos el HTML con el nombre y el texto
+            contenedor.innerHTML += `
+                <div class="opinion-card">
+                    <div class="opinion-header">
+                        <strong>${data.nombre}</strong>
+                        <span class="estrellas-rating">${estrellasHtml}</span>
+                    </div>
+                    <p class="opinion-texto">"${data.texto}"</p>
+                </div>
+            `;
+        });
+    });
+}
+

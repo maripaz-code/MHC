@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function(){
 Gracias por elegir MHC Studio 💖`;
 
             const mensajeCodificado = encodeURIComponent(mensaje);
-            const numeroWhatsApp = "51936835326"; // CAMBIA SI QUIERES
+            const numeroWhatsApp = "51936835326";
 
             window.open(`https://wa.me/${numeroWhatsApp}?text=${mensajeCodificado}`, "_blank");
         });
@@ -72,19 +72,11 @@ Gracias por elegir MHC Studio 💖`;
                 return;
             }
 
-           function guardarOpinion(nombre, texto, rating){
-    db.collection("opiniones").add({
-        nombre: nombre,
-        texto: texto,
-        rating: Number(rating),
-        fecha: firebase.firestore.FieldValue.serverTimestamp()
-    })
-    .then(() => {
-        console.log("Opinión guardada en Firebase");
-    })
-    .catch((error) => {
-        console.error("Error:", error);
-    
+            guardarOpinion(nombre, texto, ratingSeleccionado);
+
+            alert("✨ Opinión publicada con éxito ✨");
+
+            window.location.href = "opiniones.html";
         });
     }
 
@@ -106,18 +98,25 @@ function actualizarEstrellas(valor){
     });
 }
 
-function guardarOpinion(nombre, texto, rating){
-    let opiniones = JSON.parse(localStorage.getItem("opiniones")) || [];
 
-    opiniones.push({
+// 🔥 GUARDAR EN FIREBASE (NO localStorage)
+function guardarOpinion(nombre, texto, rating){
+    db.collection("opiniones").add({
         nombre: nombre,
         texto: texto,
-        rating: rating
+        rating: Number(rating),
+        fecha: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then(() => {
+        console.log("Opinión guardada en Firebase");
+    })
+    .catch((error) => {
+        console.error("Error:", error);
     });
-
-    localStorage.setItem("opiniones", JSON.stringify(opiniones));
 }
 
+
+// 🔥 MOSTRAR DESDE FIREBASE
 function mostrarOpiniones(){
     const lista = document.getElementById("listaOpiniones");
     if(!lista) return;
@@ -147,4 +146,3 @@ function mostrarOpiniones(){
 
     });
 }
-

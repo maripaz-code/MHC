@@ -77,56 +77,51 @@ document.addEventListener("DOMContentLoaded", function(){
 // FUNCIONES
 // ===============================
 
-function actualizarEstrellas(valor){
-    const estrellas = document.querySelectorAll("#estrellas span");
-    estrellas.forEach(estrella => {
-        estrella.classList.remove("activa");
-        if(estrella.getAttribute("data-value") <= valor){
-            estrella.classList.add("activa");
+let ratingSeleccionado = 0;
+
+// Manejo de estrellas
+const estrellas = document.querySelectorAll("#estrellas span");
+
+estrellas.forEach(estrella => {
+    estrella.addEventListener("click", () => {
+        ratingSeleccionado = estrella.getAttribute("data-value");
+
+        estrellas.forEach(e => e.classList.remove("activa"));
+        for (let i = 0; i < ratingSeleccionado; i++) {
+            estrellas[i].classList.add("activa");
         }
     });
-}
+});
 
-function guardarOpinion(nombre, texto, rating){
+// Botón publicar
+document.getElementById("btnOpinion").addEventListener("click", () => {
+
+    const nombre = document.getElementById("nombreOpinion").value.trim();
+    const texto = document.getElementById("textoOpinion").value.trim();
+
+    if (nombre === "" || texto === "" || ratingSeleccionado === 0) {
+        alert("Completa todos los campos y selecciona estrellas ⭐");
+        return;
+    }
+
     db.collection("opiniones").add({
         nombre: nombre,
         texto: texto,
-        rating: Number(rating),
+        rating: Number(ratingSeleccionado),
         fecha: firebase.firestore.FieldValue.serverTimestamp()
     })
     .then(() => {
-        console.log("Guardado correctamente");
+        alert("Opinión guardada en Firebase ✅");
+        document.getElementById("nombreOpinion").value = "";
+        document.getElementById("textoOpinion").value = "";
+        ratingSeleccionado = 0;
+        estrellas.forEach(e => e.classList.remove("activa"));
     })
-    .catch((error) => {
-        console.error("Error:", error);
+    .catch(error => {
+        alert("Error: " + error.message);
+        console.error(error);
     });
+
+});
 }
 
-function mostrarOpiniones(){
-    const lista = document.getElementById("listaOpiniones");
-    if(!lista) return;
-
-    db.collection("opiniones")
-      .onSnapshot((snapshot) => {
-
-        lista.innerHTML = "";
-
-        snapshot.forEach((doc) => {
-            const op = doc.data();
-
-            const div = document.createElement("div");
-            div.classList.add("opinion-card");
-
-            let estrellas = "★".repeat(op.rating || 0);
-
-            div.innerHTML = `
-                <h4>${op.nombre}</h4>
-                <div class="rating">${estrellas}</div>
-                <p>"${op.texto}"</p>
-            `;
-
-            lista.appendChild(div);
-        });
-
-    });
-}

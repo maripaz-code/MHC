@@ -123,5 +123,36 @@ document.getElementById("btnOpinion").addEventListener("click", () => {
     });
 
 });
+
+// ===============================
+// MOSTRAR OPINIONES EN opiniones.html
+// ===============================
+
+if (document.getElementById("listaOpiniones")) {
+
+    db.collection("opiniones")
+    .orderBy("fecha", "desc")
+    .onSnapshot(snapshot => {
+
+        const contenedor = document.getElementById("listaOpiniones");
+        contenedor.innerHTML = "";
+
+        snapshot.forEach(doc => {
+            const data = doc.data();
+
+            const estrellas = "⭐".repeat(data.rating);
+
+            contenedor.innerHTML += `
+                <div class="opinion-card">
+                    <h3>${data.nombre}</h3>
+                    <p class="estrellas">${estrellas}</p>
+                    <p>${data.texto}</p>
+                </div>
+            `;
+        });
+
+    });
 }
+}
+
 

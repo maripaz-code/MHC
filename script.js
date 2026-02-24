@@ -1,9 +1,6 @@
-// ==========================================
-// TODO DENTRO DE UN SOLO LISTENER
-// ==========================================
 document.addEventListener("DOMContentLoaded", function() {
 
-    // --- 1. LÓGICA DE FECHA Y HORA (Solo si existen los inputs) ---
+    // --- 1. LÓGICA DE FECHA Y HORA ---
     const fechaInput = document.getElementById("fecha");
     const horaInput = document.getElementById("hora");
 
@@ -18,22 +15,22 @@ document.addEventListener("DOMContentLoaded", function() {
     if (formCita) {
         formCita.addEventListener("submit", function(e) {
             e.preventDefault();
-            const nombre = this.nombre.value;
-            const servicio = this.servicio.value;
+            const nombre = this.nombre ? this.nombre.value : "Cliente";
+            const servicio = this.servicio ? this.servicio.value : "No especificado";
             const mensaje = `✨ NUEVA CITA MHC STUDIO ✨\n👩 Nombre: ${nombre}\n💅 Servicio: ${servicio}`;
             window.open(`https://wa.me/51936835326?text=${encodeURIComponent(mensaje)}`, "_blank");
         });
     }
 
-    // --- 3. SISTEMA DE ESTRELLAS (RATING) ---
+    // --- 3. SISTEMA DE ESTRELLAS Y PUBLICACIÓN ---
     let ratingSeleccionado = 0;
     const estrellas = document.querySelectorAll("#estrellas span");
+    const btnOpinion = document.getElementById("btnOpinion");
 
     if (estrellas.length > 0) {
         estrellas.forEach(estrella => {
             estrella.addEventListener("click", function() {
                 ratingSeleccionado = this.getAttribute("data-value");
-                // Pintar estrellas
                 estrellas.forEach(e => e.classList.remove("activa"));
                 for (let i = 0; i < ratingSeleccionado; i++) {
                     estrellas[i].classList.add("activa");
@@ -42,12 +39,15 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // --- 4. PUBLICAR EN FIREBASE (Botón Opinión) ---
-    const btnOpinion = document.getElementById("btnOpinion");
     if (btnOpinion) {
         btnOpinion.addEventListener("click", () => {
-            const nombre = document.getElementById("nombreOpinion").value.trim();
-            const texto = document.getElementById("textoOpinion").value.trim();
+            const nombreInput = document.getElementById("nombreOpinion");
+            const textoInput = document.getElementById("textoOpinion");
+
+            if (!nombreInput || !textoInput) return;
+
+            const nombre = nombreInput.value.trim();
+            const texto = textoInput.value.trim();
 
             if (nombre === "" || texto === "" || ratingSeleccionado == 0) {
                 alert("Completa todos los campos y selecciona las estrellas ⭐");
@@ -68,37 +68,37 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
- // --- MOSTRAR OPINIONES (SIN FILTROS PARA PROBAR) ---
-const contenedor = document.getElementById("listaOpiniones");
+    // --- 4. MOSTRAR OPINIONES ---
+    const contenedor = document.getElementById("listaOpiniones");
 
-if (contenedor) {
-    // Quitamos el .orderBy temporalmente para ver si es el error
-    db.collection("opiniones").onSnapshot(snapshot => {
-        if (snapshot.empty) {
-            contenedor.innerHTML = "<p>No hay opiniones guardadas aún.</p>";
-            return;
-        }
+    if (contenedor) {
+        // Reincorporamos el orderBy para que salgan en orden
+        db.collection("opiniones").orderBy("fecha", "desc").onSnapshot(snapshot => {
+            if (snapshot.empty) {
+                contenedor.innerHTML = "<p style='color:white;'>No hay opiniones guardadas aún.</p>";
+                return;
+            }
 
-        contenedor.innerHTML = ""; 
-        snapshot.forEach(doc => {
-            const data = doc.data();
-            // Verificamos en consola si los datos llegan
-            console.log("Datos recibidos:", data);
+            contenedor.innerHTML = ""; 
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const estrellasHtml = "⭐".repeat(data.rating || 0);
 
-            const estrellasHtml = "⭐".repeat(data.rating || 0);
-
-            contenedor.innerHTML += `
-                <div class="opinion-card">
-                    <div class="opinion-header">
-                        <strong>${data.nombre || 'Anónimo'}</strong> 
-                        <span class="estrellas-rating">${estrellasHtml}</span>
+                contenedor.innerHTML += `
+                    <div class="opinion-card">
+                        <div class="opinion-header">
+                            <strong>${data.nombre || 'Anónimo'}</strong> 
+                            <span class="estrellas-rating">${estrellasHtml}</span>
+                        </div>
+                        <p class="opinion-texto">"${data.texto || 'Sin comentario'}"</p>
                     </div>
-                    <p class="opinion-texto">"${data.texto || 'Sin comentario'}"</p>
-                </div>
-            `;
+                `;
+            });
+        }, error => {
+            console.error("Error en Firebase:", error);
+            // Si sale error de índice, se mostrará aquí el link para crearlo
+            contenedor.innerHTML = "<p>Error al cargar opiniones. Revisa la consola.</p>";
         });
-    }, error => {
-        console.error("Error en Firebase:", error);
-        contenedor.innerHTML = "<p>Error al cargar: " + error.message + "</p>";
-    });
-}
+    }
+
+}); // <--- ESTE ES EL CIERRE QUE FALTABA

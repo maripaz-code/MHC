@@ -68,31 +68,37 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-  // --- MOSTRAR OPINIONES DESDE FIREBASE ---
+ // --- MOSTRAR OPINIONES (SIN FILTROS PARA PROBAR) ---
 const contenedor = document.getElementById("listaOpiniones");
 
 if (contenedor) {
-    db.collection("opiniones")
-    .orderBy("fecha", "desc") // Ordena por el campo 'fecha' de tu imagen
-    .onSnapshot(snapshot => {
-        contenedor.innerHTML = ""; 
+    // Quitamos el .orderBy temporalmente para ver si es el error
+    db.collection("opiniones").onSnapshot(snapshot => {
+        if (snapshot.empty) {
+            contenedor.innerHTML = "<p>No hay opiniones guardadas aún.</p>";
+            return;
+        }
 
+        contenedor.innerHTML = ""; 
         snapshot.forEach(doc => {
             const data = doc.data();
-            
-            // 1. Convertimos el número del rating en estrellas visuales
-            const estrellasHtml = "⭐".repeat(data.rating);
+            // Verificamos en consola si los datos llegan
+            console.log("Datos recibidos:", data);
 
-            // 2. Insertamos el HTML usando los campos de tu Firebase: nombre y texto
+            const estrellasHtml = "⭐".repeat(data.rating || 0);
+
             contenedor.innerHTML += `
                 <div class="opinion-card">
                     <div class="opinion-header">
-                        <strong>${data.nombre}</strong> 
+                        <strong>${data.nombre || 'Anónimo'}</strong> 
                         <span class="estrellas-rating">${estrellasHtml}</span>
                     </div>
-                    <p class="opinion-texto">"${data.texto}"</p>
+                    <p class="opinion-texto">"${data.texto || 'Sin comentario'}"</p>
                 </div>
             `;
         });
+    }, error => {
+        console.error("Error en Firebase:", error);
+        contenedor.innerHTML = "<p>Error al cargar: " + error.message + "</p>";
     });
 }

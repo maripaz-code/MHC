@@ -72,11 +72,19 @@ Gracias por elegir MHC Studio 💖`;
                 return;
             }
 
-            guardarOpinion(nombre, texto, ratingSeleccionado);
-
-            alert("✨ Opinión publicada con éxito ✨");
-
-            window.location.href = "opiniones.html";
+           function guardarOpinion(nombre, texto, rating){
+    db.collection("opiniones").add({
+        nombre: nombre,
+        texto: texto,
+        rating: Number(rating),
+        fecha: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then(() => {
+        console.log("Opinión guardada en Firebase");
+    })
+    .catch((error) => {
+        console.error("Error:", error);
+    
         });
     }
 
@@ -132,3 +140,4 @@ function mostrarOpiniones(){
         lista.appendChild(div);
     });
 }
+

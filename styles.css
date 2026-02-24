@@ -308,7 +308,51 @@ gap:15px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
-
+/* Contenedor principal */
+.testimonios-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
 }
+
+/* Tarjeta de opinión */
+.opinion-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-left: 5px solid #d4a373; /* Un color dorado/studio */
+    transition: transform 0.3s ease;
+}
+
+.opinion-card:hover {
+    transform: translateY(-5px);
+}
+
+.opinion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.opinion-header strong {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.estrellas-rating {
+    font-size: 0.9rem;
+}
+
+.opinion-texto {
+    font-style: italic;
+    color: #555;
+    line-height: 1.6;
+}
+}
+
 
 

@@ -122,22 +122,29 @@ function mostrarOpiniones(){
     const lista = document.getElementById("listaOpiniones");
     if(!lista) return;
 
-    const opiniones = JSON.parse(localStorage.getItem("opiniones")) || [];
+    db.collection("opiniones")
+      .orderBy("fecha", "desc")
+      .onSnapshot((snapshot) => {
 
-    opiniones.reverse().forEach(op => {
+        lista.innerHTML = "";
 
-        const div = document.createElement("div");
-        div.classList.add("opinion-card");
+        snapshot.forEach((doc) => {
+            const op = doc.data();
 
-        let estrellas = "★".repeat(op.rating);
+            const div = document.createElement("div");
+            div.classList.add("opinion-card");
 
-        div.innerHTML = `
-            <h4>${op.nombre}</h4>
-            <div class="rating">${estrellas}</div>
-            <p>"${op.texto}"</p>
-        `;
+            let estrellas = "★".repeat(op.rating || 0);
 
-        lista.appendChild(div);
+            div.innerHTML = `
+                <h4>${op.nombre}</h4>
+                <div class="rating">${estrellas}</div>
+                <p>"${op.texto}"</p>
+            `;
+
+            lista.appendChild(div);
+        });
+
     });
 }
 

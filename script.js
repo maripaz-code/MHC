@@ -68,26 +68,26 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-   // --- MOSTRAR OPINIONES (LISTADO) ---
+  // --- MOSTRAR OPINIONES DESDE FIREBASE ---
 const contenedor = document.getElementById("listaOpiniones");
 
 if (contenedor) {
     db.collection("opiniones")
-    .orderBy("fecha", "desc") // Trae las más recientes primero
+    .orderBy("fecha", "desc") // Ordena por el campo 'fecha' de tu imagen
     .onSnapshot(snapshot => {
-        contenedor.innerHTML = ""; // Limpia el contenedor antes de cargar
+        contenedor.innerHTML = ""; 
 
         snapshot.forEach(doc => {
             const data = doc.data();
             
-            // Creamos las estrellas según el número guardado
+            // 1. Convertimos el número del rating en estrellas visuales
             const estrellasHtml = "⭐".repeat(data.rating);
 
-            // Insertamos el HTML con el nombre y el texto
+            // 2. Insertamos el HTML usando los campos de tu Firebase: nombre y texto
             contenedor.innerHTML += `
                 <div class="opinion-card">
                     <div class="opinion-header">
-                        <strong>${data.nombre}</strong>
+                        <strong>${data.nombre}</strong> 
                         <span class="estrellas-rating">${estrellasHtml}</span>
                     </div>
                     <p class="opinion-texto">"${data.texto}"</p>
@@ -96,4 +96,3 @@ if (contenedor) {
         });
     });
 }
-

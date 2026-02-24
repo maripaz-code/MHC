@@ -101,6 +101,9 @@ function actualizarEstrellas(valor){
 
 // 🔥 GUARDAR EN FIREBASE (NO localStorage)
 function guardarOpinion(nombre, texto, rating){
+
+    console.log("Intentando guardar...");
+
     db.collection("opiniones").add({
         nombre: nombre,
         texto: texto,
@@ -108,10 +111,10 @@ function guardarOpinion(nombre, texto, rating){
         fecha: firebase.firestore.FieldValue.serverTimestamp()
     })
     .then(() => {
-        console.log("Opinión guardada en Firebase");
+        console.log("✅ Guardado correctamente");
     })
     .catch((error) => {
-        console.error("Error:", error);
+        console.error("❌ Error real:", error);
     });
 }
 
@@ -147,5 +150,6 @@ function mostrarOpiniones(){
     });
 }
 }
+
 
 

@@ -3,7 +3,6 @@
 // ===============================
 document.addEventListener("DOMContentLoaded", function(){
 
-    // ===== FECHA Y HORA AUTOMÁTICA =====
     const fechaInput = document.getElementById("fecha");
     const horaInput = document.getElementById("hora");
 
@@ -13,7 +12,6 @@ document.addEventListener("DOMContentLoaded", function(){
         horaInput.value = ahora.toTimeString().slice(0,5);
     }
 
-    // ===== FORMULARIO WHATSAPP =====
     const form = document.getElementById("formCita");
     if(form){
         form.addEventListener("submit", function(e){
@@ -28,15 +26,12 @@ document.addEventListener("DOMContentLoaded", function(){
             const hora = this.hora.value;
 
             const mensaje = `✨ NUEVA CITA MHC STUDIO ✨
-            
 👩 Nombre: ${nombre} ${apellidos}
 📱 Celular: ${celular}
 📍 Dirección: ${direccion}
 💅 Servicio: ${servicio}
 📅 Fecha: ${fecha}
-⏰ Hora: ${hora}
-
-Gracias por elegir MHC Studio 💖`;
+⏰ Hora: ${hora}`;
 
             const mensajeCodificado = encodeURIComponent(mensaje);
             const numeroWhatsApp = "51936835326";
@@ -44,10 +39,6 @@ Gracias por elegir MHC Studio 💖`;
             window.open(`https://wa.me/${numeroWhatsApp}?text=${mensajeCodificado}`, "_blank");
         });
     }
-
-    // ===============================
-    // SISTEMA DE OPINIONES
-    // ===============================
 
     let ratingSeleccionado = 0;
 
@@ -73,9 +64,7 @@ Gracias por elegir MHC Studio 💖`;
             }
 
             guardarOpinion(nombre, texto, ratingSeleccionado);
-
             alert("✨ Opinión publicada con éxito ✨");
-
             window.location.href = "opiniones.html";
         });
     }
@@ -98,12 +87,7 @@ function actualizarEstrellas(valor){
     });
 }
 
-
-// 🔥 GUARDAR EN FIREBASE (NO localStorage)
 function guardarOpinion(nombre, texto, rating){
-
-    console.log("Intentando guardar...");
-
     db.collection("opiniones").add({
         nombre: nombre,
         texto: texto,
@@ -111,21 +95,18 @@ function guardarOpinion(nombre, texto, rating){
         fecha: firebase.firestore.FieldValue.serverTimestamp()
     })
     .then(() => {
-        console.log("✅ Guardado correctamente");
+        console.log("Guardado correctamente");
     })
     .catch((error) => {
-        console.error("❌ Error real:", error);
+        console.error("Error:", error);
     });
 }
 
-
-// 🔥 MOSTRAR DESDE FIREBASE
 function mostrarOpiniones(){
     const lista = document.getElementById("listaOpiniones");
     if(!lista) return;
 
     db.collection("opiniones")
-      .orderBy("fecha", "desc")
       .onSnapshot((snapshot) => {
 
         lista.innerHTML = "";
@@ -149,7 +130,3 @@ function mostrarOpiniones(){
 
     });
 }
-}
-
-
-
